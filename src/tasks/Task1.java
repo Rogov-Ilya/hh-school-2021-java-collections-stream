@@ -4,7 +4,7 @@ import common.Person;
 import common.PersonService;
 import common.Task;
 
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,13 +15,17 @@ import java.util.stream.Collectors;
 (он выдает несортированный Set<Person>, внутренняя работа сервиса неизвестна)
 нужно их отсортировать в том же порядке, что и переданные id.
 Оценить асимпотику работы
+O(n)
  */
 public class Task1 implements Task {
-
   // !!! Редактируйте этот метод !!!
   private List<Person> findOrderedPersons(List<Integer> personIds) {
     Set<Person> persons = PersonService.findPersons(personIds);
-    return Collections.emptyList();
+    return persons.stream()
+            .sorted(
+                    Comparator.comparing(Person::getId)
+            )
+            .collect(Collectors.toList());
   }
 
   @Override
